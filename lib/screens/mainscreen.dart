@@ -4,6 +4,8 @@ import 'package:app_wg/screens/shoppinglist.dart';
 import 'package:app_wg/screens/expenses.dart';
 import 'package:app_wg/screens/tasks.dart';
 
+import 'events.dart';
+
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -68,7 +70,7 @@ class MainScreen extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.calendar_today),
               onPressed: () {
-                //Navigator.push(context, MaterialPageRoute(builder: (context) => Events()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Events()));
               },
             ),
             IconButton(

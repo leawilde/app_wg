@@ -4,6 +4,8 @@ import 'package:app_wg/screens/tasks.dart';
 import 'package:app_wg/screens/shoppinglist.dart';
 import 'package:app_wg/screens/mainscreen.dart';
 
+import 'events.dart';
+
 
 class ShoppingList extends StatefulWidget {
   const ShoppingList({Key? key}) : super(key: key);
@@ -125,7 +127,7 @@ class _ShoppingListState extends State<ShoppingList> {
             IconButton(
               icon: Icon(Icons.calendar_today),
               onPressed: () {
-                //Navigator.push(context, MaterialPageRoute(builder: (context) => Events()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Events()));
               },
             ),
             IconButton(
