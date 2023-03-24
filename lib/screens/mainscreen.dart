@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:app_wg/task.dart';
 import 'package:app_wg/screens/shoppinglist.dart';
 import 'package:app_wg/screens/expenses.dart';
 import 'package:app_wg/screens/tasks.dart';
