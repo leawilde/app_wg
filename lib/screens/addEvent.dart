@@ -1,24 +1,15 @@
 import 'package:flutter/material.dart';
 
-/*class AddEvent extends StatelessWidget {
-  const AddEvent({Key? key}) : super(key: key);
+import 'botNavBar.dart';
+
+class AddEvent extends StatelessWidget {
+  const AddEvent({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-    );
-  }
-}*/
-
-class AddEvent extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text('Input Fields Example')),
         body: InputFieldsScreen(),
-      ),
+      bottomNavigationBar: BotNavBar(),
     );
   }
 }
@@ -29,7 +20,7 @@ class InputFieldsScreen extends StatefulWidget {
 }
 
 class _InputFieldsScreenState extends State<InputFieldsScreen> {
-  late DateTime _selectedDate;
+  late DateTime _selectedDate = DateTime.now();
   String _inputText = '';
 
   Future<void> _selectDate(BuildContext context) async {
@@ -48,22 +39,30 @@ class _InputFieldsScreenState extends State<InputFieldsScreen> {
   }
 
   void _submitData() {
-    if (_selectedDate == null || _inputText.isEmpty) {
+    if (_inputText.isEmpty) {
       return;
     }
-
-    // Process the data
-    print('Selected date: $_selectedDate');
-    print('Text input: $_inputText');
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
+    return Container(
+      color: Colors.brown,
+      padding: const EdgeInsets.all(20.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Container(
+              margin: EdgeInsets.fromLTRB(50, 10, 50, 10),
+              padding: EdgeInsets.all(10),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(20)
+              ),
+              child: Text('Add Event', style: TextStyle(color: Colors.white),)
+          ),
           InkWell(
             onTap: () => _selectDate(context),
             child: Container(
@@ -73,10 +72,7 @@ class _InputFieldsScreenState extends State<InputFieldsScreen> {
                   bottom: BorderSide(width: 1, color: Colors.grey),
                 ),
               ),
-              child: Text(
-                _selectedDate == null
-                    ? 'Select Date'
-                    : 'Selected date: ${_selectedDate.toLocal()}'.split(' ')[0],
+              child: Text('${_selectedDate.toLocal()}'.split(' ')[0],
                 style: TextStyle(fontSize: 18),
               ),
             ),
@@ -89,13 +85,20 @@ class _InputFieldsScreenState extends State<InputFieldsScreen> {
               });
             },
             decoration: InputDecoration(
-              labelText: 'Text Input',
+              labelText: 'Event Description',
               border: OutlineInputBorder(),
             ),
           ),
           SizedBox(height: 20),
           ElevatedButton(
-            onPressed: (_selectedDate != null && _inputText.isNotEmpty) ? _submitData : null,
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)
+                )
+            ),
+            onPressed: (_inputText.isNotEmpty) ? _submitData : null,
             child: Text('Submit'),
           ),
         ],

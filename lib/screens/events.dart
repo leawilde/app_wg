@@ -1,10 +1,7 @@
-import 'package:app_wg/screens/shoppinglist.dart';
-import 'package:app_wg/screens/tasks.dart';
 import 'package:flutter/material.dart';
-
 import '../event.dart';
-import 'expenses.dart';
-import 'mainscreen.dart';
+import 'addEvent.dart';
+import 'botNavBar.dart';
 
 class Events extends StatefulWidget {
   const Events({Key? key}) : super(key: key);
@@ -36,9 +33,9 @@ class _EventsState extends State<Events> {
         child: Text('Events', style: TextStyle(color: Colors.white),)
     ),
           Container(
-            child: ElevatedButton(onPressed: (
-
-                ) {  }, child: Text('Add Event'),
+            child: ElevatedButton(onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const AddEvent()));
+            }, child: Text('Add Event'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black,
@@ -60,7 +57,9 @@ class _EventsState extends State<Events> {
                           children: [
                             Text('Datum', style: TextStyle(color: Colors.black),),
                             Text(events[index].description, style: TextStyle(color: Colors.black),),
-                            ElevatedButton(onPressed: () {}, child: Text('remove'), 
+                            ElevatedButton(onPressed: () {
+                              events.removeAt(index);
+                            }, child: Text('remove'),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.white,
                                 foregroundColor: Colors.black,
@@ -74,45 +73,7 @@ class _EventsState extends State<Events> {
                 }),
           )],
       ),
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.grey[700],
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.shopping_bag),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingList()));
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.euro),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Expenses()));
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.person),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.calendar_today),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Events()));
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.cleaning_services),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Tasks()));
-                },
-              ),
-            ],
-          ),
-        )
+        bottomNavigationBar: BotNavBar()
     );
   }
 }

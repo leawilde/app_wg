@@ -1,7 +1,5 @@
+import 'package:app_wg/screens/addEvent.dart';
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:app_wg/screens/shoppinglist.dart';
-import 'package:app_wg/screens/tasks.dart';
 import 'package:app_wg/screens/mainscreen.dart';
 
 
