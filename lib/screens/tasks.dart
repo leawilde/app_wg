@@ -4,7 +4,6 @@ import 'package:app_wg/screens/tasksDone.dart';
 import 'package:flutter/material.dart';
 import 'package:app_wg/task.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'botNavBar.dart';
 
 class Tasks extends StatefulWidget {
@@ -28,15 +27,12 @@ class _TasksState extends State<Tasks> {
 
   @override
   void dispose() {
-    //_loadPoints();
     _savePoints();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-
-    _loadPoints();
 
     return Scaffold(
       backgroundColor: Colors.red[200],
@@ -86,9 +82,9 @@ class _TasksState extends State<Tasks> {
                 itemCount: tasksBackend.length,
                 itemBuilder: (context, index){
                   return taskCard(tasksBackend[index]);
-                },
-              ))
-        ],
+                }
+              )
+      )],
       ),
       bottomNavigationBar: BotNavBar(),
     );

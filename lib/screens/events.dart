@@ -14,102 +14,160 @@ class Events extends StatefulWidget {
 
 class _EventsState extends State<Events> {
 
-  List<Event> events = [];
+  late Future<List<Event>> _eventsFuture;
 
   @override
   void initState() {
-    initData();
     super.initState();
+    _eventsFuture = fetchEvents();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.brown,
       body: Column(
-        children: [Container(
-      margin: EdgeInsets.fromLTRB(50, 50, 50, 20),
-        padding: EdgeInsets.all(10),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(20)
-        ),
-        child: Text('Events', style: TextStyle(color: Colors.white),)
-    ),
+        children: <Widget>[
           Container(
-            child: ElevatedButton(onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const AddEvent()));
-            }, child: Text('Add Event'),
+            margin: EdgeInsets.fromLTRB(50, 50, 50, 20),
+            padding: EdgeInsets.all(10),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: Colors.black, borderRadius: BorderRadius.circular(20)),
+            child: Text(
+              'Events',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          Container(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const AddEvent()));
+              },
+              child: Text('Add Event'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey[300],
                 foregroundColor: Colors.black,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)
-                )
-              ),),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+            ),
           ),
           Expanded(
-            child: ListView.builder(
-                itemCount: events.length,
-                itemBuilder: (context, index){
-                  return Center(
-                    child: Container(
-                        margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                        padding: EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(events[index].date, style: TextStyle(color: Colors.black),),
-                            Text(events[index].description, style: TextStyle(color: Colors.black),),
-                            ElevatedButton(onPressed: () {
-                              setState(() {
-                                deleteEvent(events[index].id);
-                                initData();
-                              });
-                            }, child: Text('remove'),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.grey[300],
-                                foregroundColor: Colors.black,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)
-                                )
-                              ))
-                          ],
-                        )),
+            child: FutureBuilder<List<Event>>(
+              future: _eventsFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else {
+                  final events = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return Center(
+                        child: Container(
+                            margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(snapshot.data![index].date, style: TextStyle(color: Colors.black),),
+                                Text(snapshot.data![index].description, style: TextStyle(color: Colors.black),),
+                                ElevatedButton(onPressed: () {
+                                  setState(() {
+                                    deleteEvent(snapshot.data![index].id);
+                                    snapshot.data!.removeAt(index);
+                                  });
+                                }, child: Text('remove'),
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.grey[300],
+                                        foregroundColor: Colors.black,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20)
+                                        )
+                                    ))
+                              ],
+                            )),
+                      );;
+                    },
                   );
-                }),
-          )],
+                }
+              },
+            ),
+          ),
+        ],
       ),
-        bottomNavigationBar: BotNavBar()
+      bottomNavigationBar: BotNavBar(),
     );
   }
 
-  Future<List<dynamic>> fetchEvents() async {
-    final response = await http.get(Uri.parse('https://medsrv.informatik.hs-fulda.de/wgbackend/api/v1/events/'));
+  /*Widget eventTile(Event event, int index) {
+    return Center(
+      child: Container(
+          margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+          padding: EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(snapshot.data![index].date, style: TextStyle(color: Colors.black),),
+              Text(snapshot.data![index].description, style: TextStyle(color: Colors.black),),
+              ElevatedButton(onPressed: () {
+                setState(() {
+                  deleteEvent(snapshot.data![index].id);
+                  snapshot.data!.clear();
+                  initData();
+                });
+              }, child: Text('remove'),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey[300],
+                      foregroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)
+                      )
+                  ))
+            ],
+          )),
+    );
+  }*/
+
+  Future<List<Event>> fetchEvents() async {
+    final response = await http.get(Uri.parse(
+        'https://medsrv.informatik.hs-fulda.de/wgbackend/api/v1/events/'));
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      List<dynamic> eventsJson = jsonDecode(response.body);
+      List<Event> events = eventsJson.map((event) {
+        return Event(
+          id: event['id'],
+          date: event['date'],
+          description: event['name'],
+        );
+      }).toList();
+      return events;
     } else {
       throw Exception('Failed to load items');
     }
   }
 
-  Future<void> loadEvents(List<dynamic> items) async {
-    for (var item in items) {
-      String date = item['date'];
-      String name = item['name'];
-      int id = item['id'];
+  Future<void> loadEvents(List<dynamic> events) async {
+    for (var event in events) {
+      String date = event['date'];
+      String name = event['name'];
+      int id = event['id'];
       events.add(Event(id: id, date: date, description: name));
     }
 
   }
 
   Future<void> initData() async {
-    events.clear();
-    final items = await fetchEvents();
-    loadEvents(items);
+    final events = await fetchEvents();
+    loadEvents(events);
   }
 
   Future<void> deleteEvent(int id) async {
