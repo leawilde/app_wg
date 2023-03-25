@@ -14,14 +14,17 @@ class Events extends StatefulWidget {
 
 class _EventsState extends State<Events> {
 
-  List<Event> events = [Event(date: '23.03.2023', description: 'film schauen'),
-    Event(date: '23.03.2023', description: 'film schauen'),
-    Event(date: '23.03.2023', description: 'film schauen'),
-    Event(date: '23.03.2023', description: 'film schauen'),];
+  List<Event> events = [];
 
+  @override
+  void initState() {
+    initData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.brown,
       body: Column(
@@ -58,11 +61,13 @@ class _EventsState extends State<Events> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Text('Datum', style: TextStyle(color: Colors.black),),
+                            Text(events[index].date, style: TextStyle(color: Colors.black),),
                             Text(events[index].description, style: TextStyle(color: Colors.black),),
                             ElevatedButton(onPressed: () {
-                              events.removeAt(index);
-
+                              setState(() {
+                                deleteEvent(events[index].id);
+                                initData();
+                              });
                             }, child: Text('remove'),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.grey[300],
@@ -79,6 +84,47 @@ class _EventsState extends State<Events> {
       ),
         bottomNavigationBar: BotNavBar()
     );
+  }
+
+  Future<List<dynamic>> fetchEvents() async {
+    final response = await http.get(Uri.parse('https://medsrv.informatik.hs-fulda.de/wgbackend/api/v1/events/'));
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load items');
+    }
+  }
+
+  Future<void> loadEvents(List<dynamic> items) async {
+    for (var item in items) {
+      String date = item['date'];
+      String name = item['name'];
+      int id = item['id'];
+      events.add(Event(id: id, date: date, description: name));
+    }
+
+  }
+
+  Future<void> initData() async {
+    events.clear();
+    final items = await fetchEvents();
+    loadEvents(items);
+  }
+
+  Future<void> deleteEvent(int id) async {
+    final response = await http.delete(
+      Uri.parse('https://medsrv.informatik.hs-fulda.de/wgbackend/api/v1/events/$id'),
+    );
+
+    if (response.statusCode == 204) {
+      print('Entry deleted successfully');
+    } else {
+      print('Status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      throw Exception('Failed to delete entry');
+    }
+
   }
 
 }
