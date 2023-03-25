@@ -22,8 +22,6 @@ class _EventsState extends State<Events> {
     _eventsFuture = fetchEvents();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,35 +104,6 @@ class _EventsState extends State<Events> {
       bottomNavigationBar: BotNavBar(),
     );
   }
-
-  /*Widget eventTile(Event event, int index) {
-    return Center(
-      child: Container(
-          margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-          padding: EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(snapshot.data![index].date, style: TextStyle(color: Colors.black),),
-              Text(snapshot.data![index].description, style: TextStyle(color: Colors.black),),
-              ElevatedButton(onPressed: () {
-                setState(() {
-                  deleteEvent(snapshot.data![index].id);
-                  snapshot.data!.clear();
-                  initData();
-                });
-              }, child: Text('remove'),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[300],
-                      foregroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)
-                      )
-                  ))
-            ],
-          )),
-    );
-  }*/
 
   Future<List<Event>> fetchEvents() async {
     final response = await http.get(Uri.parse(
