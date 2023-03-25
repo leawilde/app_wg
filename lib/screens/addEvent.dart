@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'botNavBar.dart';
 
 class AddEvent extends StatelessWidget {
@@ -41,6 +42,9 @@ class _InputFieldsScreenState extends State<InputFieldsScreen> {
   void _submitData() {
     if (_inputText.isEmpty) {
       return;
+    } else {
+      String date = _selectedDate.year.toString() + '-' + _selectedDate.month.toString() + '-' + _selectedDate.day.toString();
+      addEvent(_inputText,date);
     }
   }
 
@@ -105,4 +109,25 @@ class _InputFieldsScreenState extends State<InputFieldsScreen> {
       ),
     );
   }
+
+  Future<void> addEvent(String name, String date) async {
+    final response = await http.post(
+      Uri.parse('https://medsrv.informatik.hs-fulda.de/wgbackend/api/v1/events/'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'name': name,
+        'date': date,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      print('Entry added successfully');
+    } else {
+      throw Exception('Failed to add entry');
+    }
+  }
+
+
 }
