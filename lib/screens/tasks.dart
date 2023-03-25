@@ -17,20 +17,12 @@ class Tasks extends StatefulWidget {
 class _TasksState extends State<Tasks> {
 
   int _points = 0;
-  List<Task> tasks = [
-    Task(description: 'Bad putzen', points: 20),
-    Task(description: 'Küche putzen', points: 20),
-    Task(description: 'Flur putzen', points: 10),
-    Task(description: 'Müll rausbringen', points: 5),
-    Task(description: 'Boden wischen', points: 10),
-    Task(description: 'WG Einkauf', points: 5),
-  ];
   List<String> _tasksDone = [];
+  List<Task> tasksBackend = [];
 
   @override
   void initState() {
-    _loadPoints();
-    _loadItems();
+    initData();
     super.initState();
   }
 
@@ -48,7 +40,7 @@ class _TasksState extends State<Tasks> {
 
     return Scaffold(
       backgroundColor: Colors.red[200],
-      body: ListView(
+      body: Column(
         //mainAxisAlignment: MainAxisAlignment.start,
         //crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -89,21 +81,17 @@ class _TasksState extends State<Tasks> {
               ],
             ),
           ),
-          taskCard(tasks[1]),
-          taskCard(tasks[2]),
-          taskCard(tasks[3]),
-          taskCard(tasks[4]),
-          taskCard(tasks[5]),
+          Expanded(
+              child: ListView.builder(
+                itemCount: tasksBackend.length,
+                itemBuilder: (context, index){
+                  return taskCard(tasksBackend[index]);
+                },
+              ))
         ],
       ),
       bottomNavigationBar: BotNavBar(),
     );
-  }
-
-  void updatePoints(int points) {
-    setState(() {
-      _points += points;
-    });
   }
 
   Widget taskCard(Task task) {
@@ -170,7 +158,7 @@ class _TasksState extends State<Tasks> {
     });
   }
 
-  Future<List<dynamic>> fetchItems() async {
+  Future<List<dynamic>> fetchTasks() async {
     final response = await http.get(Uri.parse('https://medsrv.informatik.hs-fulda.de/wgbackend/api/v1/tasks/'));
 
     if (response.statusCode == 200) {
@@ -180,13 +168,20 @@ class _TasksState extends State<Tasks> {
     }
   }
 
-  Future<void> printItems(List<dynamic> items) async {
-    for (var item in items) {
-      String name = item['name'];
-      int points = item['points'];
-      print('Description: $name, Points: $points');
-    }
+    Future<void> loadTasks(List<dynamic> items) async {
+      for (var item in items) {
+        String name = item['name'];
+        int points = item['points'];
+        tasksBackend.add(Task(description: name, points: points));
+      }
+
   }
 
+  Future<void> initData() async {
+    final items = await fetchTasks();
+    loadTasks(items);
+    _loadPoints();
+    _loadItems();
+  }
 
 }
