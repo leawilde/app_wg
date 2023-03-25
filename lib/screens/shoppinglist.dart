@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'botNavBar.dart';
 
-
 class ShoppingList extends StatefulWidget {
   const ShoppingList({Key? key}) : super(key: key);
 
@@ -63,7 +62,6 @@ class _ShoppingListState extends State<ShoppingList> {
             },
           ),
 
-
           Expanded(
             child: ListView.builder(
               itemCount: _items.length,
@@ -108,7 +106,6 @@ class DeleteButton extends StatelessWidget {
     Key? key,
     required this.onPressed,
   }) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../event.dart';
 import 'addEvent.dart';
@@ -16,6 +18,7 @@ class _EventsState extends State<Events> {
     Event(date: '23.03.2023', description: 'film schauen'),
     Event(date: '23.03.2023', description: 'film schauen'),
     Event(date: '23.03.2023', description: 'film schauen'),];
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,7 @@ class _EventsState extends State<Events> {
               Navigator.push(context, MaterialPageRoute(builder: (context) => const AddEvent()));
             }, child: Text('Add Event'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.grey[300],
                 foregroundColor: Colors.black,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)
@@ -59,9 +62,10 @@ class _EventsState extends State<Events> {
                             Text(events[index].description, style: TextStyle(color: Colors.black),),
                             ElevatedButton(onPressed: () {
                               events.removeAt(index);
+
                             }, child: Text('remove'),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
+                                backgroundColor: Colors.grey[300],
                                 foregroundColor: Colors.black,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20)
@@ -76,4 +80,5 @@ class _EventsState extends State<Events> {
         bottomNavigationBar: BotNavBar()
     );
   }
+
 }
