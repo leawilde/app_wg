@@ -10,19 +10,18 @@ class MainScreen extends StatelessWidget {
       backgroundColor: Colors.blue[900],
       body: Column(
         children: <Widget>[
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.fromLTRB(50, 50, 50, 150),
-              padding: EdgeInsets.all(20),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                'Deine WG-App',
-                style: TextStyle(color: Colors.white),
-              ),
+
+          Container(
+            margin: EdgeInsets.fromLTRB(50, 50, 50, 20),
+            padding: EdgeInsets.all(20),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text(
+              'Deine WG App',
+              style: TextStyle(color: Colors.white),
             ),
           ),
           Expanded(
