@@ -13,7 +13,6 @@ class Events extends StatefulWidget {
 }
 
 class _EventsState extends State<Events> {
-
   late Future<List<Event>> _eventsFuture;
 
   @override
@@ -66,7 +65,7 @@ class _EventsState extends State<Events> {
                 } else {
                   final events = snapshot.data!;
                   return ListView.builder(
-                    itemCount: snapshot.data!.length,
+                    itemCount: events.length,
                     itemBuilder: (context, index) {
                       return Center(
                         child: Container(
@@ -75,24 +74,32 @@ class _EventsState extends State<Events> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Text(snapshot.data![index].date, style: TextStyle(color: Colors.black),),
-                                Text(snapshot.data![index].description, style: TextStyle(color: Colors.black),),
-                                ElevatedButton(onPressed: () {
-                                  setState(() {
-                                    deleteEvent(snapshot.data![index].id);
-                                    snapshot.data!.removeAt(index);
-                                  });
-                                }, child: Text('remove'),
+                                Text(
+                                  events[index].date,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                Text(
+                                  events[index].description,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        deleteEvent(events[index].id);
+                                        events.removeAt(index);
+                                      });
+                                    },
+                                    child: Text('remove'),
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.grey[300],
                                         foregroundColor: Colors.black,
                                         shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(20)
-                                        )
-                                    ))
+                                            borderRadius:
+                                                BorderRadius.circular(20))))
                               ],
                             )),
-                      );;
+                      );
+                      ;
                     },
                   );
                 }
@@ -124,24 +131,10 @@ class _EventsState extends State<Events> {
     }
   }
 
-  Future<void> loadEvents(List<dynamic> events) async {
-    for (var event in events) {
-      String date = event['date'];
-      String name = event['name'];
-      int id = event['id'];
-      events.add(Event(id: id, date: date, description: name));
-    }
-
-  }
-
-  Future<void> initData() async {
-    final events = await fetchEvents();
-    loadEvents(events);
-  }
-
   Future<void> deleteEvent(int id) async {
     final response = await http.delete(
-      Uri.parse('https://medsrv.informatik.hs-fulda.de/wgbackend/api/v1/events/$id'),
+      Uri.parse(
+          'https://medsrv.informatik.hs-fulda.de/wgbackend/api/v1/events/$id'),
     );
 
     if (response.statusCode == 204) {
@@ -151,7 +144,5 @@ class _EventsState extends State<Events> {
       print('Response body: ${response.body}');
       throw Exception('Failed to delete entry');
     }
-
   }
-
 }

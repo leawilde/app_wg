@@ -6,5 +6,4 @@ class Item {
 
   Item ({required this.id ,required this.amount, required this.name});
 
-
 }
