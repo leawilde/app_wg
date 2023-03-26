@@ -30,8 +30,8 @@ class MainScreen extends StatelessWidget {
               alignment: Alignment.center,
               child: Image.asset(
                 'picture/Logo_App.png',
-                width: 200,
-                height: 200,
+                width: 400,
+                height: 400,
               ),
             ),
           ),
