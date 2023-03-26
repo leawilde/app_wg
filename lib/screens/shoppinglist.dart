@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'botNavBar.dart';
+import 'addItem.dart';
 
 class ShoppingList extends StatefulWidget {
   const ShoppingList({Key? key}) : super(key: key);
@@ -9,7 +10,7 @@ class ShoppingList extends StatefulWidget {
 }
 
 class _ShoppingListState extends State<ShoppingList> {
-  List<String> _items = [    'Strawberries',    'Oil',    'Salt',    'Onions'  ];
+  List<String> _items = ['Strawberries','Oil','Salt','Onions'];
 
   final TextEditingController _textEditingController = TextEditingController();
 
@@ -31,7 +32,7 @@ class _ShoppingListState extends State<ShoppingList> {
       final index = _items.indexOf(item);
       _items[index] = _items[index].startsWith('✓')
           ? _items[index].substring(1)
-          : '✓ ${_items[index]}';
+          : '✓${_items[index]}';
     });
   }
 
@@ -81,16 +82,6 @@ class _ShoppingListState extends State<ShoppingList> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: _textEditingController,
-              decoration: InputDecoration(
-                hintText: 'Add item',
-              ),
-              onSubmitted: (value) => _addItem(value),
-            ),
-          ),
         ],
       ),
       bottomNavigationBar: BotNavBar(),
@@ -110,7 +101,10 @@ class DeleteButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddItem()));
+      },
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -120,10 +114,7 @@ class DeleteButton extends StatelessWidget {
           ),
         ),
       ),
-      child: Row(mainAxisSize: MainAxisSize.min, children: [
-        Icon(Icons.delete),
-          ]
-      ),
+      child: Text('Add Item')
     );
   }
 }
