@@ -52,7 +52,6 @@ class _ShoppingListState extends State<ShoppingList> {
           ),
           DeleteButton(
             onPressed: () {
-              // Handle button press
             },
           ),
           Expanded(
