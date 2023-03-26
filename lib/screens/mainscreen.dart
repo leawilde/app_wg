@@ -20,15 +20,19 @@ class MainScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                'Shoppinglist',
+                'Deine WG-App',
                 style: TextStyle(color: Colors.white),
               ),
             ),
           ),
           Expanded(
-            child: Icon(
-              Icons.person,
-              size: 300.0,
+            child: Container(
+              alignment: Alignment.center,
+              child: Image.asset(
+                'picture/Logo_App.png',
+                width: 200,
+                height: 200,
+              ),
             ),
           ),
         ],
