@@ -81,8 +81,8 @@ class _ShoppingListState extends State<ShoppingList> {
                           value: itemName.startsWith('✓'),
                           title: Text(
                             itemName.startsWith('✓')
-                                ? itemName.substring(1)
-                                : itemName,
+                                ? '${_items[index].amount} | ' + itemName.substring(1)
+                                : '${_items[index].amount} | ' + itemName,
                           ),
                           onChanged: (_) => _toggleItemCompletion(index),
                         ),
