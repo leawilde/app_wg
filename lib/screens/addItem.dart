@@ -50,10 +50,10 @@ class _InputFieldsScreenState extends State<InputFieldsScreen> {
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(20)
             ),
-            child: Text('Add Item', style: TextStyle(color: Colors.white),)
+            child: Text('Eintrag hinzufügen', style: TextStyle(color: Colors.white),)
         ),
           TextField(
-            decoration: InputDecoration(labelText: 'Text Input'),
+            decoration: InputDecoration(labelText: 'was fehlt noch?'),
             onChanged: (value) {
               setState(() {
                 _text = value;
@@ -61,7 +61,7 @@ class _InputFieldsScreenState extends State<InputFieldsScreen> {
             },
           ),
           TextField(
-            decoration: InputDecoration(labelText: 'Numeric Input'),
+            decoration: InputDecoration(labelText: 'Anzahl'),
             keyboardType: TextInputType.number,
             onChanged: (value) {
               setState(() {
@@ -79,7 +79,7 @@ class _InputFieldsScreenState extends State<InputFieldsScreen> {
                 )
             ),
             onPressed: _onSubmit,
-            child: Text('Add'),
+            child: Text('Hinzufügen'),
           ),
         ],
       ),

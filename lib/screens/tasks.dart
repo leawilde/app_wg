@@ -48,12 +48,12 @@ class _TasksState extends State<Tasks> {
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(20)
               ),
-              child: Text('Tasks', style: TextStyle(color: Colors.white),)
+              child: Text('Aufgaben', style: TextStyle(color: Colors.white),)
           ),
           ElevatedButton(onPressed: () {
             Navigator.push(context, MaterialPageRoute(
                 builder: (context) => TasksDone(tasksDone: _tasksDone)));
-          }, child: Text('Tasks Done'),
+          }, child: Text('Erledigte Aufgaben'),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,
@@ -71,9 +71,9 @@ class _TasksState extends State<Tasks> {
             ),
             child: Column(
               children: <Widget>[
-                Text('Congrats you have got',
+                Text('Du hast',
                   style: TextStyle(color: Colors.white,),),
-                Text('$_points Points', style: TextStyle(color: Colors.white),)
+                Text('$_points Punkte', style: TextStyle(color: Colors.white),)
               ],
             ),
           ),

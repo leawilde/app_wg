@@ -21,7 +21,7 @@ class TasksDone extends StatelessWidget {
             color: Colors.black,
             borderRadius: BorderRadius.circular(20)
         ),
-        child: Text('Tasks Done', style: TextStyle(color: Colors.white),)
+        child: Text('Erledigte Aufgaben', style: TextStyle(color: Colors.white),)
         ),
           Expanded(
             child: ListView.builder(

@@ -46,7 +46,7 @@ class _ShoppingListState extends State<ShoppingList> {
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
-              'Shoppinglist',
+              'Einkaufsliste',
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -158,6 +158,6 @@ class DeleteButton extends StatelessWidget {
             ),
           ),
         ),
-        child: Text('Add Item'));
+        child: Text('Eintrag hinzufügen'));
   }
 }

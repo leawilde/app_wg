@@ -29,7 +29,7 @@ class _ExpensesState extends State<Expenses> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add Expense'),
+          title: Text('Ausgabe hinzufügen'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -43,12 +43,12 @@ class _ExpensesState extends State<Expenses> {
               TextField(
                 controller: _amountController,
                 decoration: InputDecoration(
-                  labelText: 'Amount',
+                  labelText: 'Betrag',
                 ),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
               ),
               SizedBox(height: 10),
-              Text('Select virtual people to split the bill with:'),
+              Text('Beteiligte auswählen:'),
               SizedBox(height: 10),
               Wrap(
                 spacing: 10,
@@ -101,7 +101,7 @@ class _ExpensesState extends State<Expenses> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('CANCEL'),
+              child: Text('Abbrechen'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -113,7 +113,7 @@ class _ExpensesState extends State<Expenses> {
                 });
                 Navigator.pop(context);
               },
-              child: Text('SAVE'),
+              child: Text('Speichern'),
             ),
           ],
         );
@@ -138,7 +138,7 @@ class _ExpensesState extends State<Expenses> {
             child: Column(
               children: <Widget>[
                 Text(
-                  'Expenses',
+                  'Ausgaben',
                   style: TextStyle(color: Colors.white),
                 ),
 
@@ -171,8 +171,8 @@ class _ExpensesState extends State<Expenses> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('€${expense.amount.toStringAsFixed(2)}'),
-                      Text('Per person: €${splitAmount.toStringAsFixed(2)}'),
-                      Text('Involved: ${expense.virtualPeople.map((virtualPerson) => virtualPerson.toString()).join(', ')}'),
+                      Text('Pro Person: €${splitAmount.toStringAsFixed(2)}'),
+                      Text('Beteiligte: ${expense.virtualPeople.map((virtualPerson) => virtualPerson.toString()).join(', ')}'),
                     ],
                   ),
                 );

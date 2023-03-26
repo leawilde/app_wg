@@ -65,7 +65,7 @@ class _InputFieldsScreenState extends State<InputFieldsScreen> {
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(20)
               ),
-              child: Text('Add Event', style: TextStyle(color: Colors.white),)
+              child: Text('Event hinzufügen', style: TextStyle(color: Colors.white),)
           ),
           InkWell(
             onTap: () => _selectDate(context),
@@ -89,7 +89,7 @@ class _InputFieldsScreenState extends State<InputFieldsScreen> {
               });
             },
             decoration: InputDecoration(
-              labelText: 'Event Description',
+              labelText: 'Event Beschreibung',
               border: OutlineInputBorder(),
             ),
           ),
@@ -103,7 +103,7 @@ class _InputFieldsScreenState extends State<InputFieldsScreen> {
                 )
             ),
             onPressed: (_inputText.isNotEmpty) ? _submitData : null,
-            child: Text('Submit'),
+            child: Text('Hinzufügen'),
           ),
         ],
       ),

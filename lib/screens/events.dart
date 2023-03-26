@@ -44,7 +44,7 @@ class _EventsState extends State<Events> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const AddEvent()));
               },
-              child: Text('Add Event'),
+              child: Text('Event hinzufügen'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey[300],
                 foregroundColor: Colors.black,
@@ -89,7 +89,7 @@ class _EventsState extends State<Events> {
                                         events.removeAt(index);
                                       });
                                     },
-                                    child: Text('remove'),
+                                    child: Text('löschen'),
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.grey[300],
                                         foregroundColor: Colors.black,
