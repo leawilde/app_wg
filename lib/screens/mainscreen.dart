@@ -20,7 +20,7 @@ class MainScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
-              'Deine WG App',
+              'Deine WG App ',
               style: TextStyle(color: Colors.white),
             ),
           ),
